@@ -1,6 +1,6 @@
 import arangojs from 'arangojs';
 import bunyan from 'bunyan';
-import config from 'js-abstract-synchronizer/config';
+import config from 'egxo/config';
 import packageInfo from '../package';
 import urlFormatter from 'url';
 

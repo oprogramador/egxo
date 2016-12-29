@@ -1,9 +1,9 @@
 import HTTPStatus from 'http-status';
 import InMemorySerializer from
-  'js-abstract-synchronizer/tests/integration/serializer/helpers/InMemorySerializer';
-import Serializer from 'js-abstract-synchronizer/serializer/Serializer';
-import createApp from 'js-abstract-synchronizer/routing/createApp';
-import expect from 'js-abstract-synchronizer/tests/expect';
+  'egxo/tests/integration/serializer/helpers/InMemorySerializer';
+import Serializer from 'egxo/serializer/Serializer';
+import createApp from 'egxo/routing/createApp';
+import expect from 'egxo/tests/expect';
 import request from 'supertest-as-promised';
 import sinon from 'sinon';
 

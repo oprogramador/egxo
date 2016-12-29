@@ -1,5 +1,5 @@
 import HTTPStatus from 'http-status';
-import NotFoundError from 'js-abstract-synchronizer/errors/NotFoundError';
+import NotFoundError from 'egxo/errors/NotFoundError';
 import request from 'superagent-bluebird-promise';
 
 const privates = Symbol('privates');

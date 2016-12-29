@@ -1,7 +1,7 @@
-import NotFoundError from 'js-abstract-synchronizer/errors/NotFoundError';
-import SerializerFactory from 'js-abstract-synchronizer/serializer/SerializerFactory';
-import { db } from 'js-abstract-synchronizer/servicesManager';
-import expect from 'js-abstract-synchronizer/tests/expect';
+import NotFoundError from 'egxo/errors/NotFoundError';
+import SerializerFactory from 'egxo/serializer/SerializerFactory';
+import { db } from 'egxo/servicesManager';
+import expect from 'egxo/tests/expect';
 
 describe('SerializerFactory', () => {
   describe('#create', () => {

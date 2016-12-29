@@ -1,6 +1,6 @@
-import directCreateApp from 'js-abstract-synchronizer/routing/createApp';
-import directSerializerFactory from 'js-abstract-synchronizer/serializer/SerializerFactory';
-import expect from 'js-abstract-synchronizer/tests/expect';
+import directCreateApp from 'egxo/routing/createApp';
+import directSerializerFactory from 'egxo/serializer/SerializerFactory';
+import expect from 'egxo/tests/expect';
 
 describe('index', () => {
   afterEach('clear global window', () => {
@@ -8,19 +8,19 @@ describe('index', () => {
   });
 
   afterEach('clear require cache', () => {
-    delete require.cache[require.resolve('js-abstract-synchronizer/index')];
+    delete require.cache[require.resolve('egxo/index')];
   });
 
   it('returns SerializerFactory', () => {
     // eslint-disable-next-line global-require
-    const SerializerFactory = require('js-abstract-synchronizer/index').SerializerFactory;
+    const SerializerFactory = require('egxo/index').SerializerFactory;
 
     expect(SerializerFactory).to.equal(directSerializerFactory);
   });
 
   it('returns createApp when not in browser', () => {
     // eslint-disable-next-line global-require
-    const createApp = require('js-abstract-synchronizer/index').createApp;
+    const createApp = require('egxo/index').createApp;
 
     expect(createApp).to.equal(directCreateApp);
   });
@@ -28,7 +28,7 @@ describe('index', () => {
   it('does not return createApp when in browser', () => {
     global.window = {};
     // eslint-disable-next-line global-require
-    const createApp = require('js-abstract-synchronizer/index').createApp;
+    const createApp = require('egxo/index').createApp;
 
     expect(createApp).to.be.undefined();
   });

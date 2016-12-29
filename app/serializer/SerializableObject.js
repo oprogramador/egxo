@@ -1,7 +1,7 @@
-import InvalidIdError from 'js-abstract-synchronizer/errors/InvalidIdError';
-import NotFoundError from 'js-abstract-synchronizer/errors/NotFoundError';
+import InvalidIdError from 'egxo/errors/InvalidIdError';
+import NotFoundError from 'egxo/errors/NotFoundError';
 import _ from 'lodash';
-import addMethods from 'js-abstract-synchronizer/objectManipulation/addMethods';
+import addMethods from 'egxo/objectManipulation/addMethods';
 import uuid from 'uuid';
 
 const privates = Symbol('privates');

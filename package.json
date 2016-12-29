@@ -1,5 +1,5 @@
 {
-  "name": "js-abstract-synchronizer",
+  "name": "egxo",
   "version": "2.3.1",
   "description": "abstract synchronizer for backend and frontend",
   "license": "MIT",
@@ -16,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oprogramador/js-abstract-synchronizer.git"
+    "url": "git+https://github.com/oprogramador/egxo.git"
   },
   "scripts": {
     "build": "rm -rf build && babel app --out-dir build --ignore tests",

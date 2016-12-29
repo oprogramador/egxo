@@ -1,12 +1,12 @@
 import ExtendableError from 'es6-error';
 import InMemorySerializer from
-  'js-abstract-synchronizer/tests/integration/serializer/helpers/InMemorySerializer';
-import InvalidIdError from 'js-abstract-synchronizer/errors/InvalidIdError';
-import Serializer from 'js-abstract-synchronizer/serializer/Serializer';
+  'egxo/tests/integration/serializer/helpers/InMemorySerializer';
+import InvalidIdError from 'egxo/errors/InvalidIdError';
+import Serializer from 'egxo/serializer/Serializer';
 import _ from 'lodash';
-import expect from 'js-abstract-synchronizer/tests/expect';
+import expect from 'egxo/tests/expect';
 import runSerializerBasicTests from
-  'js-abstract-synchronizer/tests/integration/serializer/helpers/runSerializerBasicTests';
+  'egxo/tests/integration/serializer/helpers/runSerializerBasicTests';
 import sinon from 'sinon';
 
 describe('Serializer', () => {

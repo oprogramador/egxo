@@ -1,4 +1,4 @@
-import NotFoundError from 'js-abstract-synchronizer/errors/NotFoundError';
+import NotFoundError from 'egxo/errors/NotFoundError';
 import arangoErrorCodes from 'arangodb-error-codes';
 
 const privates = Symbol('privates');

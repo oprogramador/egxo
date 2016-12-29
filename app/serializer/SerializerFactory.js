@@ -1,7 +1,7 @@
-import ArangoSerializer from 'js-abstract-synchronizer/serializer/ArangoSerializer';
-import HttpSerializer from 'js-abstract-synchronizer/serializer/HttpSerializer';
-import NotFoundError from 'js-abstract-synchronizer/errors/NotFoundError';
-import Serializer from 'js-abstract-synchronizer/serializer/Serializer';
+import ArangoSerializer from 'egxo/serializer/ArangoSerializer';
+import HttpSerializer from 'egxo/serializer/HttpSerializer';
+import NotFoundError from 'egxo/errors/NotFoundError';
+import Serializer from 'egxo/serializer/Serializer';
 
 const serializers = {
   ArangoSerializer,

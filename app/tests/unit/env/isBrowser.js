@@ -1,5 +1,5 @@
-import expect from 'js-abstract-synchronizer/tests/expect';
-import isBrowser from 'js-abstract-synchronizer/env/isBrowser';
+import expect from 'egxo/tests/expect';
+import isBrowser from 'egxo/env/isBrowser';
 
 describe('isBrowser', () => {
   afterEach('clear global window', () => {

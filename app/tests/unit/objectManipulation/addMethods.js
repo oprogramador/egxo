@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import addMethods from 'js-abstract-synchronizer/objectManipulation/addMethods';
-import expect from 'js-abstract-synchronizer/tests/expect';
+import addMethods from 'egxo/objectManipulation/addMethods';
+import expect from 'egxo/tests/expect';
 
 describe('addMethods', () => {
   it('adds methods from prototype', () => {

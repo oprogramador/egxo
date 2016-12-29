@@ -1,6 +1,6 @@
-import NotFoundError from 'js-abstract-synchronizer/errors/NotFoundError';
-import Serializer from 'js-abstract-synchronizer/serializer/Serializer';
-import expect from 'js-abstract-synchronizer/tests/expect';
+import NotFoundError from 'egxo/errors/NotFoundError';
+import Serializer from 'egxo/serializer/Serializer';
+import expect from 'egxo/tests/expect';
 import faker from 'faker';
 
 export default (createSerializerImplementation) => {

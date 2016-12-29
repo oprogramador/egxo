@@ -1,4 +1,4 @@
-import SerializableObjectGenerator from 'js-abstract-synchronizer/serializer/SerializableObject';
+import SerializableObjectGenerator from 'egxo/serializer/SerializableObject';
 import _ from 'lodash';
 
 const privates = Symbol('privates');

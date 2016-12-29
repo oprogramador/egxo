@@ -1,10 +1,10 @@
-import ArangoSerializer from 'js-abstract-synchronizer/serializer/ArangoSerializer';
-import HttpSerializer from 'js-abstract-synchronizer/serializer/HttpSerializer';
-import Serializer from 'js-abstract-synchronizer/serializer/Serializer';
-import createApp from 'js-abstract-synchronizer/routing/createApp';
-import { db } from 'js-abstract-synchronizer/servicesManager';
+import ArangoSerializer from 'egxo/serializer/ArangoSerializer';
+import HttpSerializer from 'egxo/serializer/HttpSerializer';
+import Serializer from 'egxo/serializer/Serializer';
+import createApp from 'egxo/routing/createApp';
+import { db } from 'egxo/servicesManager';
 import runSerializerBasicTests from
-  'js-abstract-synchronizer/tests/integration/serializer/helpers/runSerializerBasicTests';
+  'egxo/tests/integration/serializer/helpers/runSerializerBasicTests';
 
 let listener;
 const port = 1234;
