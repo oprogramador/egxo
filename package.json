@@ -12,7 +12,9 @@
     "serializer",
     "orm",
     "odm",
-    "data"
+    "data",
+    "graph",
+    "edge"
   ],
   "repository": {
     "type": "git",
