@@ -2,5 +2,5 @@
 set -e
 
 npm install
-APP_DIR=app npm run postinstall
+APP_DIR=src npm run postinstall
 npm start
