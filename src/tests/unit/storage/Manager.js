@@ -4,11 +4,17 @@ import expect from 'egxo/tests/expect';
 describe('Manager', () => {
   describe('#save', () => {
     it('generates a not empty id');
+    it('preserves id for objects saved before');
   });
 
   describe('#find', () => {
     it('rejects with NotFoundError for non-existent id');
+    it('retrieves from cache');
+    it('constructs object of right class');
   });
+
+  it('sends data to next managers');
+  it('works with class identifier');
 
   it('stores and retrieves', () => {
     class Person {
