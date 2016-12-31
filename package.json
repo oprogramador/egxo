@@ -1,6 +1,6 @@
 {
   "name": "egxo",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "distributed data store",
   "license": "MIT",
   "main": "./build/index.js",
