@@ -1,5 +1,3 @@
-import uuid from 'uuid';
-
 const _classes = Symbol('classes');
 const _objects = Symbol('objects');
 
@@ -10,7 +8,7 @@ class Manager {
   }
 
   save(object) {
-    const id = uuid.v4();
+    const id = object.getId();
     const values = object.getValues();
     const className = object.getClassName();
     this[_objects][id] = {

@@ -1,5 +1,6 @@
 import Manager from 'egxo/storage/Manager';
 import expect from 'egxo/tests/expect';
+import faker from 'faker';
 
 describe('Manager', () => {
   describe('#save', () => {
@@ -20,6 +21,7 @@ describe('Manager', () => {
     class Person {
       constructor({ name }) {
         this.name = name;
+        this.id = faker.random.uuid();
       }
 
       getValues() {
@@ -35,6 +37,10 @@ describe('Manager', () => {
       getClassName() {
         return 'Person';
       }
+
+      getId() {
+        return this.id;
+      }
     }
 
     const manager = new Manager({
@@ -46,7 +52,7 @@ describe('Manager', () => {
     const alice = new Person({ name: 'Alice' });
 
     return manager.save(alice)
-      .then(id => manager.find(id))
+      .then(() => manager.find(alice.getId()))
       .then((object) => {
         expect(object.getName()).to.equal('Alice');
       });
