@@ -1,4 +1,5 @@
 import Manager from 'egxo/storage/Manager';
+import NotFoundError from 'egxo/errors/NotFoundError';
 import expect from 'egxo/tests/expect';
 import faker from 'faker';
 
@@ -29,7 +30,18 @@ const createPersonClass = () => class Person {
 
 describe('Manager', () => {
   describe('#find', () => {
-    it('rejects with NotFoundError for non-existent id');
+    it('rejects with NotFoundError for non-existent id', () => {
+      const Person = createPersonClass();
+
+      const manager = new Manager({
+        classes: {
+          Person,
+        },
+      });
+
+      return expect(manager.find('non-existent-id')).to.be.rejectedWith(NotFoundError);
+    });
+
     it('retrieves from cache', () => {
       const Person = createPersonClass();
 
@@ -48,6 +60,11 @@ describe('Manager', () => {
         });
     });
     it('constructs object of right class');
+  });
+
+  describe('#dirty', () => {
+    it('returns true when object is dirty');
+    it('returns false when object is not dirty');
   });
 
   it('sends data to next managers', () => {
@@ -75,9 +92,40 @@ describe('Manager', () => {
       });
   });
 
-  it('retrieves from next managers');
+  it('sends data to indirect next managers');
+
+  it.skip('retrieves from next managers', () => {
+    const Person = createPersonClass();
+
+    const managerA = new Manager({
+      classes: {
+        Person,
+      },
+    });
+    const managerB = new Manager({
+      classes: {
+        Person,
+      },
+    });
+
+    managerA.addNext(managerB);
+
+    const alice = new Person({ name: 'Alice' });
+
+    return managerB.save(alice)
+      .then(() => managerA.find(alice.getId()))
+      .then((object) => {
+        expect(object.getName()).to.equal('Alice');
+      });
+  });
+
+  it('retrieves from indirect next managers');
+
+  it('retrieves from multiple next managers');
 
   it('works with class identifier');
+
+  it('saves dirty referenced objects');
 
   it('stores and retrieves', () => {
     const Person = createPersonClass();

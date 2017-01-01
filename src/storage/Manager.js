@@ -1,7 +1,11 @@
+import NotFoundError from 'egxo/errors/NotFoundError';
+import _ from 'lodash';
+
 const _classes = Symbol('classes');
 const _objects = Symbol('objects');
 const _nextManagers = Symbol('nextManagers');
 const _sendToNextManagers = Symbol('sendToNextManagers');
+const _retrieveFromNextManagers = Symbol('retrieveFromNextManagers');
 const _createRawData = Symbol('createRawData');
 
 class Manager {
@@ -30,7 +34,11 @@ class Manager {
   }
 
   [_sendToNextManagers](data) {
-    this[_nextManagers].forEach(manager => manager.saveRawData(data));
+    return Promise.resolve(this[_nextManagers].map(manager => manager.saveRawData(data)));
+  }
+
+  [_retrieveFromNextManagers](id) {
+    return Promise.all(() => this[_nextManagers].map(manager => manager.find(id)));
   }
 
   saveRawData(data) {
@@ -44,7 +52,11 @@ class Manager {
   find(id) {
     const object = this[_objects][id];
 
-    return Promise.resolve(object);
+    if (!_.isUndefined(object)) {
+      return Promise.resolve(object);
+    }
+
+    return Promise.reject(new NotFoundError());
   }
 
   addNext(manager) {
