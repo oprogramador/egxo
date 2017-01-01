@@ -2,6 +2,7 @@ const _classes = Symbol('classes');
 const _objects = Symbol('objects');
 const _nextManagers = Symbol('nextManagers');
 const _sendToNextManagers = Symbol('sendToNextManagers');
+const _createRawData = Symbol('createRawData');
 
 class Manager {
   constructor({ classes }) {
@@ -11,18 +12,21 @@ class Manager {
   }
 
   save(object) {
-    const id = object.getId();
-    const values = object.getValues();
-    const className = object.getClassName();
-    const data = {
-      className,
-      id,
-      values,
-    };
-    this[_objects][id] = data;
+    this[_objects][object.getId()] = object;
+    const data = this[_createRawData](object);
     this[_sendToNextManagers](data);
 
     return Promise.resolve();
+  }
+
+  [_createRawData](object) {
+    const data = {
+      className: object.getClassName(),
+      id: object.getId(),
+      values: object.getValues(),
+    };
+
+    return data;
   }
 
   [_sendToNextManagers](data) {
@@ -30,15 +34,15 @@ class Manager {
   }
 
   saveRawData(data) {
-    this[_objects][data.id] = data;
+    const constructor = this[_classes][data.className];
+    const object = new constructor(data.values);
+    this[_objects][data.id] = object;
 
     return Promise.resolve();
   }
 
   find(id) {
-    const objectWithMetadata = this[_objects][id];
-    const constructor = this[_classes][objectWithMetadata.className];
-    const object = new constructor(objectWithMetadata.values);
+    const object = this[_objects][id];
 
     return Promise.resolve(object);
   }

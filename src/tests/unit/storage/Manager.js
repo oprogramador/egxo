@@ -30,7 +30,23 @@ const createPersonClass = () => class Person {
 describe('Manager', () => {
   describe('#find', () => {
     it('rejects with NotFoundError for non-existent id');
-    it('retrieves from cache');
+    it('retrieves from cache', () => {
+      const Person = createPersonClass();
+
+      const manager = new Manager({
+        classes: {
+          Person,
+        },
+      });
+
+      const alice = new Person({ name: 'Alice' });
+
+      return manager.save(alice)
+        .then(() => manager.find(alice.getId()))
+        .then((object) => {
+          expect(object).to.equal(alice);
+        });
+    });
     it('constructs object of right class');
   });
 
@@ -58,6 +74,8 @@ describe('Manager', () => {
         expect(object.getName()).to.equal('Alice');
       });
   });
+
+  it('retrieves from next managers');
 
   it('works with class identifier');
 
