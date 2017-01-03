@@ -38,12 +38,27 @@ class Manager {
     return data;
   }
 
+  findRawData(id) {
+    const objectWithMetadata = this[_findSync](id);
+
+    return objectWithMetadata.rawData;
+  }
+
   [_sendToNextManagers](data) {
     return Promise.resolve(this[_nextManagers].map(manager => manager.saveRawData(data)));
   }
 
   [_retrieveFromNextManagers](id) {
-    return Promise.all(() => this[_nextManagers].map(manager => manager.find(id)));
+    return Promise.all(this[_nextManagers].map(
+      manager => manager.find(id)
+        .catch((error) => {
+          if (error instanceof NotFoundError) {
+            return null;
+          }
+          throw error;
+        })
+    ))
+      .then(objects => objects.find(object => object));
   }
 
   saveRawData(rawData) {
@@ -60,7 +75,13 @@ class Manager {
   find(id) {
     return Promise.resolve()
       .then(() => this[_findSync](id))
-      .then(objectWithMetadata => objectWithMetadata.object);
+      .then(objectWithMetadata => objectWithMetadata.object)
+      .catch((error) => {
+        if (error instanceof NotFoundError && this[_nextManagers].length > 0) {
+          return this[_retrieveFromNextManagers](id);
+        }
+        throw error;
+      });
   }
 
   [_findSync](id) {

@@ -142,7 +142,7 @@ describe('Manager', () => {
 
   it('sends data to indirect next managers');
 
-  it.skip('retrieves from next managers', () => {
+  it('retrieves from next managers', () => {
     const Person = createPersonClass();
 
     const managerA = new Manager({
@@ -192,4 +192,54 @@ describe('Manager', () => {
         expect(object.getName()).to.equal('Alice');
       });
   });
+
+  it('stores raw data and retrieves object', () => {
+    const Person = createPersonClass();
+
+    const manager = new Manager({
+      classes: {
+        Person,
+      },
+    });
+
+    const data = {
+      className: 'Person',
+      id: 'foo-id',
+      values: {
+        name: 'Alice',
+      },
+    };
+
+    return manager.saveRawData(data)
+      .then(() => manager.find('foo-id'))
+      .then((object) => {
+        expect(object.getName()).to.equal('Alice');
+      });
+  });
+
+  it('stores object and retrieves raw data', () => {
+    const Person = createPersonClass();
+
+    const manager = new Manager({
+      classes: {
+        Person,
+      },
+    });
+
+    const alice = new Person({ name: 'Alice' });
+
+    return manager.save(alice)
+      .then(() => manager.findRawData(alice.getId()))
+      .then((data) => {
+        expect(data).to.deep.equal({
+          className: 'Person',
+          id: alice.getId(),
+          values: {
+            name: 'Alice',
+          },
+        });
+      });
+  });
+
+  it('retrieves raw data from next manager');
 });
