@@ -19,6 +19,12 @@ const createPersonClass = () => class Person {
     return this.name;
   }
 
+  setName(name) {
+    this.name = name;
+
+    return this;
+  }
+
   getClassName() {
     return 'Person';
   }
@@ -62,9 +68,51 @@ describe('Manager', () => {
     it('constructs object of right class');
   });
 
-  describe('#dirty', () => {
-    it('returns true when object is dirty');
-    it('returns false when object is not dirty');
+  describe('#isDirty', () => {
+    it('returns true for new object', () => {
+      const Person = createPersonClass();
+
+      const manager = new Manager({
+        classes: {
+          Person,
+        },
+      });
+
+      const alice = new Person({ name: 'Alice' });
+
+      expect(manager.isDirty(alice)).to.be.true();
+    });
+
+    it('returns true for updated object', () => {
+      const Person = createPersonClass();
+
+      const manager = new Manager({
+        classes: {
+          Person,
+        },
+      });
+
+      const alice = new Person({ name: 'Alice' });
+
+      return manager.save(alice)
+        .then(() => alice.setName('alice2'))
+        .then(() => expect(manager.isDirty(alice)).to.be.true());
+    });
+
+    it('returns false for saved object', () => {
+      const Person = createPersonClass();
+
+      const manager = new Manager({
+        classes: {
+          Person,
+        },
+      });
+
+      const alice = new Person({ name: 'Alice' });
+
+      return manager.save(alice)
+        .then(() => expect(manager.isDirty(alice)).to.be.false());
+    });
   });
 
   it('sends data to next managers', () => {

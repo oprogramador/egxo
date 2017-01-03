@@ -7,6 +7,7 @@ const _nextManagers = Symbol('nextManagers');
 const _sendToNextManagers = Symbol('sendToNextManagers');
 const _retrieveFromNextManagers = Symbol('retrieveFromNextManagers');
 const _createRawData = Symbol('createRawData');
+const _findSync = Symbol('findSync');
 
 class Manager {
   constructor({ classes }) {
@@ -16,11 +17,15 @@ class Manager {
   }
 
   save(object) {
-    this[_objects][object.getId()] = object;
-    const data = this[_createRawData](object);
-    this[_sendToNextManagers](data);
+    const rawData = this[_createRawData](object);
 
-    return Promise.resolve();
+    return this[_sendToNextManagers](rawData)
+      .then(() => {
+        this[_objects][object.getId()] = {
+          object,
+          rawData,
+        };
+      });
   }
 
   [_createRawData](object) {
@@ -41,26 +46,51 @@ class Manager {
     return Promise.all(() => this[_nextManagers].map(manager => manager.find(id)));
   }
 
-  saveRawData(data) {
-    const constructor = this[_classes][data.className];
-    const object = new constructor(data.values);
-    this[_objects][data.id] = object;
+  saveRawData(rawData) {
+    const constructor = this[_classes][rawData.className];
+    const object = new constructor(rawData.values);
+    this[_objects][rawData.id] = {
+      object,
+      rawData,
+    };
 
     return Promise.resolve();
   }
 
   find(id) {
-    const object = this[_objects][id];
+    return Promise.resolve()
+      .then(() => this[_findSync](id))
+      .then(objectWithMetadata => objectWithMetadata.object);
+  }
 
-    if (!_.isUndefined(object)) {
-      return Promise.resolve(object);
+  [_findSync](id) {
+    const objectWithMetadata = this[_objects][id];
+
+    if (!_.isUndefined(objectWithMetadata)) {
+      return objectWithMetadata;
     }
 
-    return Promise.reject(new NotFoundError());
+    throw new NotFoundError();
   }
 
   addNext(manager) {
     this[_nextManagers].push(manager);
+  }
+
+  isDirty(object) {
+    try {
+      const oldObject = this[_findSync](object.getId());
+      const currentData = JSON.stringify(this[_createRawData](object));
+      const oldData = JSON.stringify(oldObject.rawData);
+
+      return currentData !== oldData;
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        return true;
+      }
+
+      throw error;
+    }
   }
 }
 
