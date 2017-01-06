@@ -1,3 +1,4 @@
+import IDataManager from 'egxo/storage/IDataManager';
 import NotFoundError from 'egxo/errors/NotFoundError';
 import _ from 'lodash';
 
@@ -10,6 +11,12 @@ const _createRawData = Symbol('createRawData');
 const _findSync = Symbol('findSync');
 
 class Manager {
+  static getInterfaces() {
+    return [
+      IDataManager,
+    ];
+  }
+
   constructor({ classes }) {
     this[_classes] = classes;
     this[_objects] = {};
