@@ -1,36 +1,14 @@
 import NotFoundError from 'egxo/errors/NotFoundError';
+import createBasePersonClass from 'egxo/tests/helpers/createBasePersonClass';
 import expect from 'egxo/tests/expect';
-import faker from 'faker';
 
-const createPersonClass = () => class Person {
-  constructor({ name }) {
-    this.name = name;
-    this.id = faker.random.uuid();
+const createPersonClass = () => {
+  const BasePerson = createBasePersonClass();
+
+  class Person extends BasePerson {
   }
 
-  getValues() {
-    return {
-      name: this.name,
-    };
-  }
-
-  getName() {
-    return this.name;
-  }
-
-  setName(name) {
-    this.name = name;
-
-    return this;
-  }
-
-  getClassName() {
-    return 'Person';
-  }
-
-  getId() {
-    return this.id;
-  }
+  return Person;
 };
 
 const testIDataManager = (IDataManagerClass) => {
@@ -115,62 +93,6 @@ const testIDataManager = (IDataManagerClass) => {
       });
     });
 
-    it('sends data to next managers', () => {
-      const Person = createPersonClass();
-
-      const managerA = new IDataManagerClass({
-        classes: {
-          Person,
-        },
-      });
-      const managerB = new IDataManagerClass({
-        classes: {
-          Person,
-        },
-      });
-
-      managerA.addNext(managerB);
-
-      const alice = new Person({ name: 'Alice' });
-
-      return managerA.save(alice)
-        .then(() => managerB.find(alice.getId()))
-        .then((object) => {
-          expect(object.getName()).to.equal('Alice');
-        });
-    });
-
-    it('sends data to indirect next managers');
-
-    it('retrieves from next managers', () => {
-      const Person = createPersonClass();
-
-      const managerA = new IDataManagerClass({
-        classes: {
-          Person,
-        },
-      });
-      const managerB = new IDataManagerClass({
-        classes: {
-          Person,
-        },
-      });
-
-      managerA.addNext(managerB);
-
-      const alice = new Person({ name: 'Alice' });
-
-      return managerB.save(alice)
-        .then(() => managerA.find(alice.getId()))
-        .then((object) => {
-          expect(object.getName()).to.equal('Alice');
-        });
-    });
-
-    it('retrieves from indirect next managers');
-
-    it('retrieves from multiple next managers');
-
     it('works with class identifier');
 
     it('saves dirty referenced objects');
@@ -192,56 +114,6 @@ const testIDataManager = (IDataManagerClass) => {
           expect(object.getName()).to.equal('Alice');
         });
     });
-
-    it('stores raw data and retrieves object', () => {
-      const Person = createPersonClass();
-
-      const manager = new IDataManagerClass({
-        classes: {
-          Person,
-        },
-      });
-
-      const data = {
-        className: 'Person',
-        id: 'foo-id',
-        values: {
-          name: 'Alice',
-        },
-      };
-
-      return manager.saveRawData(data)
-        .then(() => manager.find('foo-id'))
-        .then((object) => {
-          expect(object.getName()).to.equal('Alice');
-        });
-    });
-
-    it('stores object and retrieves raw data', () => {
-      const Person = createPersonClass();
-
-      const manager = new IDataManagerClass({
-        classes: {
-          Person,
-        },
-      });
-
-      const alice = new Person({ name: 'Alice' });
-
-      return manager.save(alice)
-        .then(() => manager.findRawData(alice.getId()))
-        .then((data) => {
-          expect(data).to.deep.equal({
-            className: 'Person',
-            id: alice.getId(),
-            values: {
-              name: 'Alice',
-            },
-          });
-        });
-    });
-
-    it('retrieves raw data from next manager');
   });
 };
 

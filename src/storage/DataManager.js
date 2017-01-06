@@ -1,4 +1,6 @@
 import IDataManager from 'egxo/storage/IDataManager';
+import IDataReceiver from 'egxo/storage/IDataReceiver';
+import IDataSender from 'egxo/storage/IDataSender';
 import NotFoundError from 'egxo/errors/NotFoundError';
 import _ from 'lodash';
 
@@ -14,6 +16,8 @@ class Manager {
   static getInterfaces() {
     return [
       IDataManager,
+      IDataReceiver,
+      IDataSender,
     ];
   }
 
