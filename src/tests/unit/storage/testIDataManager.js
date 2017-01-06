@@ -2,39 +2,18 @@ import NotFoundError from 'egxo/errors/NotFoundError';
 import createBasePersonClass from 'egxo/tests/helpers/createBasePersonClass';
 import expect from 'egxo/tests/expect';
 
-const createPersonClass = () => {
-  const BasePerson = createBasePersonClass();
-
-  class Person extends BasePerson {
-  }
-
-  return Person;
-};
-
-const testIDataManager = (IDataManagerClass) => {
+const testIDataManager = (createManager) => {
   describe('IDataManager', () => {
     describe('#find', () => {
       it('rejects with NotFoundError for non-existent id', () => {
-        const Person = createPersonClass();
-
-        const manager = new IDataManagerClass({
-          classes: {
-            Person,
-          },
-        });
+        const manager = createManager();
 
         return expect(manager.find('non-existent-id')).to.be.rejectedWith(NotFoundError);
       });
 
       it('retrieves from cache', () => {
-        const Person = createPersonClass();
-
-        const manager = new IDataManagerClass({
-          classes: {
-            Person,
-          },
-        });
-
+        const manager = createManager();
+        const Person = createBasePersonClass();
         const alice = new Person({ name: 'Alice' });
 
         return manager.save(alice)
@@ -48,28 +27,16 @@ const testIDataManager = (IDataManagerClass) => {
 
     describe('#isDirty', () => {
       it('returns true for new object', () => {
-        const Person = createPersonClass();
-
-        const manager = new IDataManagerClass({
-          classes: {
-            Person,
-          },
-        });
-
+        const manager = createManager();
+        const Person = createBasePersonClass();
         const alice = new Person({ name: 'Alice' });
 
         expect(manager.isDirty(alice)).to.be.true();
       });
 
       it('returns true for updated object', () => {
-        const Person = createPersonClass();
-
-        const manager = new IDataManagerClass({
-          classes: {
-            Person,
-          },
-        });
-
+        const manager = createManager();
+        const Person = createBasePersonClass();
         const alice = new Person({ name: 'Alice' });
 
         return manager.save(alice)
@@ -78,14 +45,8 @@ const testIDataManager = (IDataManagerClass) => {
       });
 
       it('returns false for saved object', () => {
-        const Person = createPersonClass();
-
-        const manager = new IDataManagerClass({
-          classes: {
-            Person,
-          },
-        });
-
+        const manager = createManager();
+        const Person = createBasePersonClass();
         const alice = new Person({ name: 'Alice' });
 
         return manager.save(alice)
@@ -98,14 +59,8 @@ const testIDataManager = (IDataManagerClass) => {
     it('saves dirty referenced objects');
 
     it('stores and retrieves', () => {
-      const Person = createPersonClass();
-
-      const manager = new IDataManagerClass({
-        classes: {
-          Person,
-        },
-      });
-
+      const manager = createManager();
+      const Person = createBasePersonClass();
       const alice = new Person({ name: 'Alice' });
 
       return manager.save(alice)

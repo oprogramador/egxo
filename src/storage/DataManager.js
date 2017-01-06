@@ -12,7 +12,7 @@ const _retrieveFromNextManagers = Symbol('retrieveFromNextManagers');
 const _createRawData = Symbol('createRawData');
 const _findSync = Symbol('findSync');
 
-class Manager {
+class DataManager {
   static getInterfaces() {
     return [
       IDataManager,
@@ -126,4 +126,4 @@ class Manager {
   }
 }
 
-export default Manager;
+export default DataManager;

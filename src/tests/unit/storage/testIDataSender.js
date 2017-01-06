@@ -1,26 +1,11 @@
 import createBasePersonClass from 'egxo/tests/helpers/createBasePersonClass';
 import expect from 'egxo/tests/expect';
 
-const createPersonClass = () => {
-  const BasePerson = createBasePersonClass();
-
-  class Person extends BasePerson {
-  }
-
-  return Person;
-};
-
-const testIDataManager = (IDataManagerClass) => {
+const testIDataManager = (createManager) => {
   describe('IDataSender', () => {
     it('stores object and retrieves raw data', () => {
-      const Person = createPersonClass();
-
-      const manager = new IDataManagerClass({
-        classes: {
-          Person,
-        },
-      });
-
+      const manager = createManager();
+      const Person = createBasePersonClass();
       const alice = new Person({ name: 'Alice' });
 
       return manager.save(alice)
