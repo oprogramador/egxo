@@ -70,4 +70,49 @@ describe('HttpServer', () => {
 
     afterEach('close server', () => server.close());
   });
+
+  describe('GET', () => {
+    const prepareGet = () => {
+      const port = 1235;
+      server = new HttpServer({ port });
+      const id = 'foo-object-id';
+      const data = {
+        className: 'Person',
+        id,
+        values: {
+          name: 'Bob',
+        },
+      };
+      const manager = {
+        findRawData: sinon.stub().rejects(),
+      };
+      manager.findRawData.withArgs(id).resolves(data);
+      server.addNext(manager);
+
+      const getRequest = request(`http://localhost:${port}`)
+        .get(`/object/${id}`);
+
+      return {
+        data,
+        getRequest,
+        manager,
+      };
+    };
+
+    it('retrieves data from next manager', () => {
+      const { getRequest, data } = prepareGet();
+
+      return getRequest
+        .expect(data);
+    });
+
+    it('returns OK status', () => {
+      const { getRequest } = prepareGet();
+
+      return getRequest
+        .expect(HttpStatus.OK);
+    });
+
+    afterEach('close server', () => server.close());
+  });
 });
