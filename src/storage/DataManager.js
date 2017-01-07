@@ -3,6 +3,7 @@ import IDataReceiver from 'egxo/storage/IDataReceiver';
 import IDataSender from 'egxo/storage/IDataSender';
 import NotFoundError from 'egxo/errors/NotFoundError';
 import _ from 'lodash';
+import retrieveFromNextManagers from 'egxo/storage/retrieveFromNextManagers';
 
 const _classes = Symbol('classes');
 const _objects = Symbol('objects');
@@ -53,7 +54,7 @@ class DataManager {
     try {
       const objectWithMetadata = this[_findSync](id);
 
-      return objectWithMetadata.rawData;
+      return Promise.resolve(objectWithMetadata.rawData);
     } catch (error) {
       return Promise.reject(error);
     }
@@ -64,16 +65,8 @@ class DataManager {
   }
 
   [_retrieveFromNextManagers](id) {
-    return Promise.all(this[_nextManagers].map(
-      manager => manager.find(id)
-        .catch((error) => {
-          if (error instanceof NotFoundError) {
-            return null;
-          }
-          throw error;
-        })
-    ))
-      .then(objects => objects.find(object => object));
+    return retrieveFromNextManagers(id, this[_nextManagers])
+      .then(rawData => this.saveRawData(rawData));
   }
 
   saveRawData(rawData) {
@@ -84,7 +77,7 @@ class DataManager {
       rawData,
     };
 
-    return Promise.resolve();
+    return Promise.resolve(object);
   }
 
   find(id) {
