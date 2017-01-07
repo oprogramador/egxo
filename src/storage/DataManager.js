@@ -60,7 +60,7 @@ class DataManager {
   }
 
   [_sendToNextManagers](data) {
-    return Promise.resolve(this[_nextManagers].map(manager => manager.saveRawData(data)));
+    return Promise.all(this[_nextManagers].map(manager => manager.saveRawData(data)));
   }
 
   [_retrieveFromNextManagers](id) {
