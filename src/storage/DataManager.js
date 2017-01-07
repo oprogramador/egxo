@@ -50,9 +50,13 @@ class DataManager {
   }
 
   findRawData(id) {
-    const objectWithMetadata = this[_findSync](id);
+    try {
+      const objectWithMetadata = this[_findSync](id);
 
-    return objectWithMetadata.rawData;
+      return objectWithMetadata.rawData;
+    } catch (error) {
+      return Promise.reject(error);
+    }
   }
 
   [_sendToNextManagers](data) {

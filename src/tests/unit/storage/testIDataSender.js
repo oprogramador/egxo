@@ -1,3 +1,4 @@
+import NotFoundError from 'egxo/errors/NotFoundError';
 import expect from 'egxo/tests/expect';
 
 const testIDataManager = (createManager) => {
@@ -14,6 +15,13 @@ const testIDataManager = (createManager) => {
       };
 
       return expect(manager.saveRawData(data)).to.be.fulfilled();
+    });
+
+    it('rejects with NotFoundError for not found object', () => {
+      const manager = createManager();
+      const id = 'non-existent-id';
+
+      return expect(manager.findRawData(id)).to.be.rejectedWith(NotFoundError);
     });
   });
 };

@@ -1,4 +1,5 @@
 import HttpClient from 'egxo/storage/HttpClient';
+import HttpStatus from 'http-status';
 import express from 'express';
 import testInterfaces from 'egxo/tests/helpers/testInterfaces';
 
@@ -16,7 +17,9 @@ let listener;
 describe('HttpClient', () => {
   beforeEach('create server', () => {
     const app = express();
-    app.post('/object', (req, res) => res.send());
+    app
+      .post('/object', (req, res) => res.send({}))
+      .get('/object/:id', (req, res) => res.status(HttpStatus.NOT_FOUND).end());
     listener = app.listen(port);
   });
 
