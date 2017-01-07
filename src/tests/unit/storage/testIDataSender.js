@@ -1,24 +1,19 @@
-import createBasePersonClass from 'egxo/tests/helpers/createBasePersonClass';
 import expect from 'egxo/tests/expect';
 
 const testIDataManager = (createManager) => {
   describe('IDataSender', () => {
-    it('stores object and retrieves raw data', () => {
+    it('stores raw data and retrieves object', () => {
       const manager = createManager();
-      const Person = createBasePersonClass();
-      const alice = new Person({ name: 'Alice' });
 
-      return manager.save(alice)
-        .then(() => manager.findRawData(alice.getId()))
-        .then((data) => {
-          expect(data).to.deep.equal({
-            className: 'Person',
-            id: alice.getId(),
-            values: {
-              name: 'Alice',
-            },
-          });
-        });
+      const data = {
+        className: 'Person',
+        id: 'foo-id',
+        values: {
+          name: 'Alice',
+        },
+      };
+
+      return expect(manager.saveRawData(data)).to.be.fulfilled();
     });
   });
 };

@@ -1,12 +1,12 @@
-import IDataReceiver from 'egxo/storage/IDataReceiver';
+import IDataSender from 'egxo/storage/IDataSender';
 import request from 'superagent-bluebird-promise';
 
 const _url = Symbol('url');
 
-class HttpRequester {
+class HttpClient {
   static getInterfaces() {
     return [
-      IDataReceiver,
+      IDataSender,
     ];
   }
 
@@ -19,4 +19,4 @@ class HttpRequester {
   }
 }
 
-export default HttpRequester;
+export default HttpClient;
