@@ -1,4 +1,7 @@
-import directCreateApp from 'egxo/routing/createApp';
+import { DataManager, HttpClient } from 'egxo/index';
+import directDataManager from 'egxo/storage/DataManager';
+import directHttpClient from 'egxo/storage/HttpClient';
+import directHttpServer from 'egxo/storage/HttpServer';
 import expect from 'egxo/tests/expect';
 
 describe('index', () => {
@@ -10,18 +13,26 @@ describe('index', () => {
     delete require.cache[require.resolve('egxo/index')];
   });
 
-  it.skip('returns createApp when not in browser', () => {
+  it('returns HttpServer when not in browser', () => {
     // eslint-disable-next-line global-require
-    const createApp = require('egxo/index').createApp;
+    const HttpServer = require('egxo/index').HttpServer;
 
-    expect(createApp).to.equal(directCreateApp);
+    expect(HttpServer).to.equal(directHttpServer);
   });
 
-  it.skip('does not return createApp when in browser', () => {
+  it('does not return createApp when in browser', () => {
     global.window = {};
     // eslint-disable-next-line global-require
-    const createApp = require('egxo/index').createApp;
+    const HttpServer = require('egxo/index').HttpServer;
 
-    expect(createApp).to.be.undefined();
+    expect(HttpServer).to.be.undefined();
+  });
+
+  it('returns HttpClient', () => {
+    expect(HttpClient).to.equal(directHttpClient);
+  });
+
+  it('returns DataManager', () => {
+    expect(DataManager).to.equal(directDataManager);
   });
 });
