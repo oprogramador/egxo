@@ -71,7 +71,7 @@ class DataManager {
 
   saveRawData(rawData) {
     const constructor = this[_classes][rawData.className];
-    const object = new constructor(rawData.values);
+    const object = new constructor(rawData.values, rawData.id);
     this[_objects][rawData.id] = {
       object,
       rawData,
@@ -81,12 +81,10 @@ class DataManager {
   }
 
   find(id) {
-    return Promise.resolve()
-      .then(() => this[_findSync](id))
-      .then(objectWithMetadata => objectWithMetadata.object)
+    return this[_retrieveFromNextManagers](id)
       .catch((error) => {
         if (error instanceof NotFoundError) {
-          return this[_retrieveFromNextManagers](id);
+          return this[_findSync](id).object;
         }
         throw error;
       });

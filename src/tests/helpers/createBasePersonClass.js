@@ -1,9 +1,9 @@
 import faker from 'faker';
 
 const createBasePersonClass = () => class BasePerson {
-  constructor({ name }) {
+  constructor({ name }, id) {
     this.name = name;
-    this.id = faker.random.uuid();
+    this.id = id || faker.random.uuid();
   }
 
   getValues() {

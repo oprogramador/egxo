@@ -57,7 +57,7 @@ describe('HTTP managers', () => {
       });
   });
 
-  it.skip('updates data from server', () => {
+  it('updates data from server', () => {
     const { clientManager, serverManager, alice } = prepareManagers();
 
     return clientManager.save(alice)
@@ -73,7 +73,6 @@ describe('HTTP managers', () => {
       })
       .then(() => clientManager.find(alice.getId()))
       .then((object) => {
-        console.log(object.getName());
         expect(object.getName()).to.equal('Alice2');
       });
   });
