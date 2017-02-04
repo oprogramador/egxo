@@ -85,7 +85,7 @@ class DataManager {
       .then(() => this[_findSync](id))
       .then(objectWithMetadata => objectWithMetadata.object)
       .catch((error) => {
-        if (error instanceof NotFoundError && this[_nextManagers].length > 0) {
+        if (error instanceof NotFoundError) {
           return this[_retrieveFromNextManagers](id);
         }
         throw error;
