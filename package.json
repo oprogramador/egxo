@@ -1,6 +1,6 @@
 {
   "name": "egxo",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "distributed data store",
   "license": "MIT",
   "main": "./build/index.js",
@@ -21,11 +21,11 @@
     "url": "git+https://github.com/oprogramador/egxo.git"
   },
   "scripts": {
-    "build": "rm -rf build && babel src --out-dir build --ignore tests",
+    "build": "rm -rf build && babel src --out-dir build --ignore tests/",
     "create-project-symlink": "scripts/create-project-symlink.sh",
     "lint": "eslint src",
     "postinstall": "npm run create-project-symlink",
-    "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "start": "scripts/wait_for_db.sh && npm test",
     "self-install": "scripts/self_install.sh",
     "test-mocha": "mocha -r babel-register --recursive src/tests --timeout 5000",
