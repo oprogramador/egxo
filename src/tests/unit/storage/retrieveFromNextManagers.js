@@ -43,7 +43,7 @@ describe('retrieveFromNextManagers', () => {
         });
     });
 
-    it('retrieves from second manager when the first one rejects', () => {
+    it('retrieves from second manager when the first one rejects', async () => {
       const data = {
         className: 'Person',
         id: 'bob-id',
@@ -59,10 +59,12 @@ describe('retrieveFromNextManagers', () => {
       };
       const id = 'foo-id';
 
-      return expect(retrieveFromNextManagers(id, [managerA, managerB])).to.eventually.deep.equal(data);
+      const result = await retrieveFromNextManagers(id, [managerA, managerB]);
+
+      expect(result).to.deep.equal(data);
     });
 
-    it('retrieves from third manager when two first ones reject', () => {
+    it('retrieves from third manager when two first ones reject', async () => {
       const data = {
         className: 'Person',
         id: 'bob-id',
@@ -81,10 +83,12 @@ describe('retrieveFromNextManagers', () => {
       };
       const id = 'foo-id';
 
-      return expect(retrieveFromNextManagers(id, [managerA, managerB, managerC])).to.eventually.deep.equal(data);
+      const result = await retrieveFromNextManagers(id, [managerA, managerB, managerC]);
+
+      expect(result).to.deep.equal(data);
     });
 
-    it('retrieves from first manager when it resolves', () => {
+    it('retrieves from first manager when it resolves', async () => {
       const data = {
         className: 'Person',
         id: 'cindy-id',
@@ -100,10 +104,12 @@ describe('retrieveFromNextManagers', () => {
       };
       const id = 'foo-id';
 
-      return expect(retrieveFromNextManagers(id, [managerA, managerB])).to.eventually.deep.equal(data);
+      const result = await retrieveFromNextManagers(id, [managerA, managerB]);
+
+      expect(result).to.deep.equal(data);
     });
 
-    it('retrieves when there is only one manager and it resolves', () => {
+    it('retrieves when there is only one manager and it resolves', async () => {
       const data = {
         className: 'Person',
         id: 'dave-id',
@@ -116,7 +122,9 @@ describe('retrieveFromNextManagers', () => {
       };
       const id = 'foo-id';
 
-      return expect(retrieveFromNextManagers(id, [managerA])).to.eventually.deep.equal(data);
+      const result = await retrieveFromNextManagers(id, [managerA]);
+
+      expect(result).to.deep.equal(data);
     });
   });
 });

@@ -24,7 +24,7 @@ class HttpServer {
           .then(() => res.send(data));
       })
       .get('/object/:id', (req, res) => {
-        const id = req.params.id;
+        const { id } = req.params;
 
         this[_retrieveFromNextManagers](id)
           .then(data => res.send(data));
