@@ -15,7 +15,7 @@ describe('index', () => {
 
   it('returns HttpServer when not in browser', () => {
     // eslint-disable-next-line global-require
-    const HttpServer = require('egxo/index').HttpServer;
+    const { HttpServer } = require('egxo/index');
 
     expect(HttpServer).to.equal(directHttpServer);
   });
@@ -23,7 +23,7 @@ describe('index', () => {
   it('does not return createApp when in browser', () => {
     global.window = {};
     // eslint-disable-next-line global-require
-    const HttpServer = require('egxo/index').HttpServer;
+    const { HttpServer } = require('egxo/index');
 
     expect(HttpServer).to.be.undefined();
   });
