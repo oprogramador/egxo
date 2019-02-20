@@ -63,7 +63,6 @@
     "mocha": "^6.0.0",
     "nodemon": "^1.18.10",
     "sinon": "^7.2.4",
-    "sinon-as-promised": "^4.0.3",
     "sinon-chai": "^3.3.0",
     "supertest": "^3.4.2",
     "supertest-as-promised": "^4.0.2"
