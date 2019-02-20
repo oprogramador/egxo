@@ -28,7 +28,7 @@
     "prepublishOnly": "npm run build",
     "start": "scripts/wait_for_db.sh && npm test",
     "self-install": "scripts/self_install.sh",
-    "test-mocha": "mocha -r babel-register --recursive src/tests --timeout 5000",
+    "test-mocha": "mocha -r babel-register --recursive src/tests --timeout 5000 --exit",
     "test": "npm run self-install && npm run lint && npm run test-mocha"
   },
   "dependencies": {
