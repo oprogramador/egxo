@@ -1,6 +1,3 @@
 {
-  "extends": "eslint-config-airbnb-improved",
-  "rules": {
-    "import/order": "off"
-  }
+  "extends": "eslint-config-airbnb-improved"
 }
