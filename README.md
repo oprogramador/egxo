@@ -5,6 +5,8 @@
 
 [![NPM status](https://nodei.co/npm/egxo.png?downloads=true&stars=true)](https://npmjs.org/package/egxo)
 
+This library is no longer supported, please use [vinberodb](https://github.com/oprogramador/vinberodb) instead.
+
 This library works on:
 
 * backend like ODM or ORM
